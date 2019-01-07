@@ -3,10 +3,8 @@ package com.app.library.fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
 import com.app.library.presenter.MvpPresenter;
 import com.app.library.view.MvpView;
-import com.app.library.view.delegate.DefaultViewDelegateImp;
 
 
 /**
@@ -36,7 +34,7 @@ public abstract class MvpFragment<Presenter extends MvpPresenter> extends LazyFr
     public abstract Presenter createPresenter();
     protected MvpView applyViewDelegate()
     {
-        return new DefaultViewDelegateImp(this);
+        return null;
     }
     @Override
     protected void onDestroyViewLazy() {

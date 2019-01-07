@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentActivity;
 
 import com.app.library.presenter.MvpPresenter;
 import com.app.library.view.MvpView;
-import com.app.library.view.delegate.DefaultViewDelegateImp;
 
 /**
  * Created by cample on 2018/6/21.
@@ -34,7 +33,7 @@ public abstract class MvpActivity<Presenter extends MvpPresenter> extends Fragme
     public abstract Presenter createPresenter();
     protected MvpView applyViewDelegate()
     {
-        return new DefaultViewDelegateImp(this);
+        return null;
     }
     @Override
     protected void onDestroy() {
