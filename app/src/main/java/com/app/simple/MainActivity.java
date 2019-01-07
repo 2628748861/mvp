@@ -1,6 +1,7 @@
 package com.app.simple;
 
 import android.os.Bundle;
+
 import com.app.library.activity.MvpActivity;
 import com.app.library.presenter.MvpPresenter;
 

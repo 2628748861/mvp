@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 
 import com.app.library.presenter.MvpPresenter;
 import com.app.library.view.MvpView;
@@ -16,6 +17,7 @@ public abstract class MvpActivity<Presenter extends MvpPresenter> extends Fragme
 {
     protected Presenter p;
     protected Context mContext;
+    protected View contentView;
     private MvpView viewDelegate;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,7 +25,8 @@ public abstract class MvpActivity<Presenter extends MvpPresenter> extends Fragme
         mContext=this;
         if(applyContent()!=0)
         {
-            setContentView(applyContent());
+            contentView=getLayoutInflater().inflate(applyContent(),null,false);
+            setContentView(contentView);
         }
         //设置View代理实现 [用户自由设置]
         viewDelegate=applyViewDelegate();
@@ -35,6 +38,11 @@ public abstract class MvpActivity<Presenter extends MvpPresenter> extends Fragme
     {
         return null;
     }
+
+    public View getContentView() {
+        return contentView;
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

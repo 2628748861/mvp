@@ -3,6 +3,8 @@ package com.app.library.fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
+
 import com.app.library.presenter.MvpPresenter;
 import com.app.library.view.MvpView;
 
