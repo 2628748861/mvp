@@ -30,10 +30,12 @@ public abstract class MvpActivity<Presenter extends MvpPresenter> extends Fragme
         }
         //设置View代理实现 [用户自由设置]
         viewDelegate=applyViewDelegate();
-        p=createPresenter();
+        if(!check(viewDelegate))
+            viewDelegate.onCreate(this,getContentView());
+        p=applyPresenter();
     }
-    public abstract int applyContent();
-    public abstract Presenter createPresenter();
+    protected abstract int applyContent();
+    protected abstract Presenter applyPresenter();
     protected MvpView applyViewDelegate()
     {
         return null;
@@ -54,62 +56,69 @@ public abstract class MvpActivity<Presenter extends MvpPresenter> extends Fragme
         p=null;
         mContext=null;
     }
+
+    @Override
+    public void onCreate(Object target, View view) {
+        if(check(viewDelegate))return;
+        viewDelegate.onCreate(target, view);
+    }
+
     @Override
     public void showConfirmDialog(String msg, String cancle, DialogInterface.OnClickListener cancleListener, String confirm, DialogInterface.OnClickListener confirmListener) {
-        if(check())return;
+        if(check(viewDelegate))return;
         viewDelegate.showConfirmDialog(msg, cancle, cancleListener, confirm, confirmListener);
     }
 
     @Override
     public void showTip( String msg) {
-        if(check())return;
+        if(check(viewDelegate))return;
         viewDelegate.showTip(msg);
     }
 
     @Override
     public void showCommiting() {
-        if(check())return;
+        if(check(viewDelegate))return;
         viewDelegate.showCommiting();
     }
 
     @Override
     public void dissmissCommiting() {
-        if(check())return;
+        if(check(viewDelegate))return;
         viewDelegate.dissmissCommiting();
     }
 
     @Override
     public void showEmpty() {
-        if(check())return;
+        if(check(viewDelegate))return;
         viewDelegate.showEmpty();
     }
 
     @Override
     public void showContent() {
-        if(check())return;
+        if(check(viewDelegate))return;
         viewDelegate.showContent();
     }
 
     @Override
     public void showLoading() {
-        if(check())return;
+        if(check(viewDelegate))return;
         viewDelegate.showLoading();
     }
 
     @Override
     public void showError() {
-        if(check())return;
+        if(check(viewDelegate))return;
         viewDelegate.showError();
     }
 
     @Override
     public void onDetach() {
-        if(check())return;
+        if(check(viewDelegate))return;
         viewDelegate.onDetach();
     }
 
-    private boolean check()
+    private boolean check(Object o)
     {
-        return viewDelegate==null||isFinishing();
+        return o==null||isFinishing()||isDestroyed();
     }
 }

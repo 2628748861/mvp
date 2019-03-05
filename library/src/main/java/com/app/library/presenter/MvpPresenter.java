@@ -16,8 +16,13 @@ public abstract class MvpPresenter<V extends MvpView>{
     public MvpPresenter(V v) {
         this.v = v;
     }
+    /**
+     * 当presenter从Activity移除时需要做的操作
+     * **/
     public void onDetach()
     {
+        /**
+         * 移除所有任务**/
         this.compositeDisposable.clear();
         this.compositeDisposable=null;
         this.v=null;
