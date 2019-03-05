@@ -35,4 +35,5 @@ public class MainFragment extends BaseMvpFragment<MainFgtPresenter> implements M
     public void refershView(String value) {
         btn.setText(value);
     }
+
 }

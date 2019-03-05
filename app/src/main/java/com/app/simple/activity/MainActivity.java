@@ -3,18 +3,19 @@ import android.os.Bundle;
 //import android.support.annotation.Nullable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.TextView;
+import android.view.View;
 import com.app.simple.activity.base.BaseMvpActivity;
 import com.app.simple.R;
 import com.app.simple.fragment.MainFragment;
 import com.app.simple.presenter.MainPresenter;
 import com.app.simple.view.MainContractView;
 import butterknife.BindView;
+import ezy.ui.layout.LoadingLayout;
 
-public class MainActivity extends BaseMvpActivity<MainPresenter> implements MainContractView.View{
+public class MainActivity extends BaseMvpActivity<MainPresenter> implements MainContractView.View {
 
-    @BindView(R.id.textview)
-    TextView textview;
+    @BindView(R.id.loadinglayout)
+    LoadingLayout loadinglayout;
 
     @Override
     protected int applyContent() {
@@ -30,15 +31,37 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        loadinglayout.setRetryListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                p.getData();
+            }
+        });
+
         FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.container,new MainFragment());
         transaction.commit();
 
-        p.getNotifyData();
+        p.getData();
+
     }
 
     @Override
-    public void notifyTextView(String value) {
-        textview.setText(value);
+    public void showContent() {
+        super.showContent();
+        loadinglayout.showContent();
     }
+
+    @Override
+    public void showEmpty( ) {
+        super.showEmpty();
+        loadinglayout.showEmpty();
+    }
+
+    @Override
+    public void showError( ) {
+        super.showError();
+        loadinglayout.showError();
+    }
+
 }
